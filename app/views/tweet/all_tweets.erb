@@ -1,0 +1,20 @@
+<h2>Here is what everyone had to say</h2>
+
+<% if @tweets != nil %>
+	<table>
+		<% @tweets.each do |tweet| %>
+		<tr>
+			<td><%= tweet.description %></td>
+			<td>
+				<% if current_user != nil %>
+					<% if tweet.user_id == current_user.id %>
+						<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+<% else %>
+	<p>There are no tweets yet.</p>
+<% end %>

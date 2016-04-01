@@ -1,0 +1,12 @@
+<h2> Changed your mind? </h2>
+
+<p>Previous tweet by: <%= @tweet.user.username %>:</p>
+<p><%= @tweet.description %></p>
+Edit:
+<form method=post action='/tweets/<%= @tweet.id %>'>
+	<input type=text placeholder="<%= @tweet.description %>" name="tweet[description]" style="width:500px; height:40px"></br>
+	<input type="hidden" name="_method" value="put" >
+	<input type=submit value="Submit">
+</form>
+
+<p><%= @error %></p>

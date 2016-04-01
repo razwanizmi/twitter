@@ -1,15 +1,10 @@
 <h1>Welcome to Twitter Clone v1.0</h1>
 
 <% if logged_in? %>
-	<p>You are logged in as <%= current_user.username %></p>
 	
 	<a href="/users/<%= current_user.id %>">View your profile</a><br>
 
 	<a href="/tweets/new">Create a new Tweet</a>
-
-	<form action="/sessions/<%=current_user.id%>" method="post">
-		<input type="submit" value="Logout">
-	</form><br>
 
 <% else %>
 	<p>Please sign up or login below</p>
@@ -23,4 +18,5 @@
 	</form>
 <% end %>
 
-<a href='/users/index'>See all our users</a>
+<br><a href='/users/index'>See all our users</a><br>
+<a href='/tweets/index'>See all tweets</a>

@@ -9,8 +9,10 @@
 		<tr>
 			<td><%= tweet.description %></td>
 			<td>
-				<% if tweet.user_id == current_user.id %>
-					<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
+				<% if current_user != nil %>
+					<% if tweet.user_id == current_user.id %>
+						<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
+					<% end %>
 				<% end %>
 			</td>
 		</tr>
@@ -20,6 +22,8 @@
 	<p><%= @user.username %> has no tweets yet.</p>
 <% end %>
 
-<br><% if @user.id == current_user.id %>
-	<a href="/users/<%= current_user.id %>/edit">Edit your profile</a>
+<% if current_user != nil %>
+	<br><% if @user.id == current_user.id %>
+		<a href="/users/<%= current_user.id %>/edit">Edit your profile</a>
+	<% end %>
 <% end %>
