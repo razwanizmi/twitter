@@ -1,6 +1,18 @@
 <h2>Profle for <%= @user.username %></h2>
 <p>Username: <%= @user.username %></p>
 <p>Email: <%= @user.email %></p>
+
+<% if current_user != nil %>
+	<% if @user.followers.find_by(follower_id: current_user.id) == nil %>
+		<form action="/users/<%= @user.id %>/followers/<%= current_user.id %>" method="post">
+			<input type="submit" value="Follow">
+		</form>
+	<% else %>
+		<p>You are following <%= @user.username %></p>
+	<% end %>	
+<% end %>
+
+
 <p>Tweets:</p>
 
 <% if @user.tweets != nil %>
