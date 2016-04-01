@@ -1,3 +1,10 @@
 <h2> What are you thinking? </h2>
 
 <p>New tweet for <%= current_user.username %>:</p>
+
+<form method=post action='/tweets'>
+	<input type=text placeholder="Tweet must be no more than 140 characters..." name="tweet[description]" style="width:500px; height:40px"></br>
+	<input type=submit value="Submit">
+</form>
+
+<p><%= @error %></p>
