@@ -1,7 +1,15 @@
 <h1>Welcome to Twitter Clone v1.0</h1>
 
-<p>Please sign up or login below</p>
-
-<form action="/users/new" method="get">
-	<input type="submit" value="Sign up">
-</form>
+<% if logged_in? %>
+	<p>You are logged in as <%= current_user.username %></p>
+<% else %>
+	<p>Please sign up or login below</p>
+	<br>
+	<form action="/users/new" method="get">
+		<input type="submit" value="Sign up">
+	</form>
+	<br>
+	<form action="/sessions/new" method="get">
+		<input type="submit" value="Login">
+	</form>
+<% end %>
