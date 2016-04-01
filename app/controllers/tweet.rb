@@ -3,7 +3,7 @@ get '/tweets/new' do
 end
 
 post '/tweets' do
-  tweet = Tweet.new(params[:tweet])
+  tweet = Tweet.new(params[:tweet].merge(user_id: current_user.id))
   if tweet.save
     redirect '/'
   else

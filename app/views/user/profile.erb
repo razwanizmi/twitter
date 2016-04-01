@@ -1,7 +1,25 @@
 <h2>Profle for <%= @user.username %></h2>
 <p>Username: <%= @user.username %></p>
 <p>Email: <%= @user.email %></p>
+<p>Tweets:</p>
 
-<% if @user.id == current_user.id %>
+<% if @user.tweets != nil %>
+	<table>
+		<% @user.tweets.all.each do |tweet| %>
+		<tr>
+			<td><%= tweet.description %></td>
+			<td>
+				<% if tweet.user_id == current_user.id %>
+					<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
+				<% end %>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+<% else %>
+	<p><%= @user.username %> has no tweets yet.</p>
+<% end %>
+
+<br><% if @user.id == current_user.id %>
 	<a href="/users/<%= current_user.id %>/edit">Edit your profile</a>
 <% end %>
