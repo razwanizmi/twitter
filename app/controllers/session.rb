@@ -12,3 +12,10 @@ post '/sessions' do
     erb :"session/login"
   end
 end
+
+post '/sessions/:id' do
+  if logged_in?
+    session[:user_id] = nil
+    redirect '/'
+  end
+end

@@ -12,6 +12,11 @@ post '/users' do
   end
 end
 
+get '/users/index' do
+  @users = User.all
+  erb :"user/everyone"
+end
+
 get '/users/:id' do
   @user = User.find(params[:id])
   erb :"user/profile"

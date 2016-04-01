@@ -1,0 +1,5 @@
+<h2>Here is everyone on Twitter Clone</h2>
+
+<% @users.each do |user| %>
+	<p><a href="/users/<%= user.id %>"><%= user.username %></a></p>
+<% end %>

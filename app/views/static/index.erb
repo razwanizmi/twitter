@@ -2,7 +2,13 @@
 
 <% if logged_in? %>
 	<p>You are logged in as <%= current_user.username %></p>
-	<a href="/users/<%= current_user.id %>">View your profile</a>
+	
+	<a href="/users/<%= current_user.id %>">View your profile</a><br>
+
+	<form style="display:inline-block" action="/sessions/<%=current_user.id%>" method="post">
+		<input type="submit" value="Logout">
+	</form><br>
+
 <% else %>
 	<p>Please sign up or login below</p>
 	<br>
@@ -14,3 +20,5 @@
 		<input type="submit" value="Login">
 	</form>
 <% end %>
+
+<a href='/users/index'>See all our users</a>
