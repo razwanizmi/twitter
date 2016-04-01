@@ -5,7 +5,9 @@
 	
 	<a href="/users/<%= current_user.id %>">View your profile</a><br>
 
-	<form style="display:inline-block" action="/sessions/<%=current_user.id%>" method="post">
+	<a href="/tweets/new">Create a new Tweet</a>
+
+	<form action="/sessions/<%=current_user.id%>" method="post">
 		<input type="submit" value="Logout">
 	</form><br>
 
