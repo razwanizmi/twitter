@@ -1,0 +1,7 @@
+<h2>Profle for <%= @user.username %></h2>
+<p>Username: <%= @user.username %></p>
+<p>Email: <%= @user.email %></p>
+
+<% if @user.id == current_user.id %>
+	<a href="/users/<%= current_user.id %>/edit">Edit your profile</a>
+<% end %>

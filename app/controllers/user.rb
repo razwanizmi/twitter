@@ -11,3 +11,8 @@ post '/users' do
     erb :"static/signup_error"
   end
 end
+
+get '/users/:id' do
+  @user = User.find(params[:id])
+  erb :"user/profile"
+end
