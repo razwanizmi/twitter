@@ -5,7 +5,7 @@ end
 post '/tweets' do
   tweet = Tweet.new(params[:tweet].merge(user_id: current_user.id))
   if tweet.save
-    redirect '/'
+    redirect "/users/#{current_user.id}"
   else
     @error = tweet.errors.full_messages.first
     erb :"tweet/new_tweet"
@@ -25,5 +25,11 @@ end
 put '/tweets/:id' do
   tweet = Tweet.find(params[:id])
   tweet.update(params[:tweet].merge(user_id: current_user.id))
-  redirect '/'
+  redirect "/users/#{current_user.id}"
+end
+
+delete '/tweets/:id' do
+  tweet = Tweet.find(params[:id])
+  tweet.destroy!
+  redirect "/users/#{current_user.id}"
 end

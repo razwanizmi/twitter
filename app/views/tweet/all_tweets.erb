@@ -12,6 +12,18 @@
 					<% end %>
 				<% end %>
 			</td>
+			<td>
+				<p>Tweeted by: <%= tweet.user.username %> on <%= tweet.updated_at %></p>
+			</td>
+			<td>
+				<% if current_user != nil %>
+					<% if tweet.user_id == current_user.id %>
+						<form action="/tweets/<%= tweet.id %>" method="post">
+							<input type="hidden" name="_method" value="delete">
+							<input type="submit" value="Delete">
+					<% end %>
+				<% end %>
+			</td>
 		</tr>
 		<% end %>
 	</table>

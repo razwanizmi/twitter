@@ -11,6 +11,10 @@
 		</form>
 	<% else %>
 		<p>You are following <%= @user.username %></p>
+		<form action="/users/<%= @user.id %>/followers/<%= current_user.id %>" method="post">
+			<input type="hidden" name="_method" value="delete">
+			<input type="submit" value="Unfollow">
+		</form>
 	<% end %>	
 <% end %>
 
@@ -34,6 +38,15 @@
 					<% end %>
 				<% end %>
 			</td>
+			<td>
+				<% if current_user != nil %>
+					<% if tweet.user_id == current_user.id %>
+						<form action="/tweets/<%= tweet.id %>" method="post">
+							<input type="hidden" name="_method" value="delete">
+							<input type="submit" value="Delete">
+					<% end %>
+				<% end %>
+			</td>			
 		</tr>
 		<% end %>
 	</table>
