@@ -2,51 +2,57 @@
 <p>Username: <%= @user.username %></p>
 <p>Email: <%= @user.email %></p>
 
-<% if current_user != nil %>
-	<% if @user.id == current_user.id %>
-		<p> This is you! </p>
-	<% elsif @user.followers.find_by(follower_id: current_user.id) == nil %>
-		<form action="/users/<%= @user.id %>/followers/<%= current_user.id %>" method="post">
-			<input type="submit" value="Follow">
-		</form>
-	<% else %>
-		<p>You are following <%= @user.username %></p>
-		<form action="/users/<%= @user.id %>/followers/<%= current_user.id %>" method="post">
-			<input type="hidden" name="_method" value="delete">
-			<input type="submit" value="Unfollow">
-		</form>
-	<% end %>	
-<% end %>
-
-<% if current_user != nil %>
-	<br><% if @user.id == current_user.id %>
-		<a href="/users/<%= current_user.id %>/edit">Edit your profile</a>
+<div id="profile">
+	<% if current_user != nil %>
+		<% if @user.id == current_user.id %>
+			<p> This is you! </p>
+		<% elsif @user.followers.find_by(follower_id: current_user.id) == nil %>
+			<form action="/users/<%= @user.id %>/followers/<%= current_user.id %>" method="post" style="font-size: 0.75em">
+				<input type="submit" value="Follow">
+			</form>
+		<% else %>
+			<form action="/users/<%= @user.id %>/followers/<%= current_user.id %>" method="post" style="font-size: 0.75em">
+				<input type="hidden" name="_method" value="delete">
+				<input type="submit" value="Unfollow">
+			</form>
+		<% end %>	
 	<% end %>
-<% end %>
+</div>
 
-<p>Tweets:</p>
+<div id="edit">
+	<% if current_user != nil %>
+		<% if @user.id == current_user.id %>
+			<a href="/users/<%= current_user.id %>/edit">Edit your profile</a>
+		<% end %>
+	<% end %>
+</div>
 
-<% if @user.tweets != nil %>
-	<table>
-		<% @user.tweets.all.each do |tweet| %>
+<p>Tweets by <%= @user.username %>:</p>
+
+<% if @user.tweets.count != 0 %>
+	<table id="tweet">
+		<% @user.tweets.all.reverse.each do |tweet| %>
 		<tr>
-			<td><%= tweet.description %></td>
 			<td>
-				<% if current_user != nil %>
-					<% if tweet.user_id == current_user.id %>
+				<p id="description"><%= tweet.description %></p>
+				<div id="tags">
+					<p>Tweeted by: <a href="/users/<%= tweet.user.id %>"><%= tweet.user.username %></a></p> 
+					<p>on <%= tweet.updated_at.to_formatted_s(:long) %></p>
+				</div>
+				<div id="edit">
+					<% if logged_in? && tweet.user_id == current_user.id %>						
 						<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
 					<% end %>
+				</div>
+				<div id="delete">
+					<% if logged_in?  && tweet.user_id == current_user.id %>
+					<form action="/tweets/<%= tweet.id %>" method="post">
+						<input type="hidden" name="_method" value="delete">
+						<button type="submit">Delete</button>
+					</form>
 				<% end %>
+				</div>
 			</td>
-			<td>
-				<% if current_user != nil %>
-					<% if tweet.user_id == current_user.id %>
-						<form action="/tweets/<%= tweet.id %>" method="post">
-							<input type="hidden" name="_method" value="delete">
-							<input type="submit" value="Delete">
-					<% end %>
-				<% end %>
-			</td>			
 		</tr>
 		<% end %>
 	</table>
@@ -54,24 +60,34 @@
 	<p><%= @user.username %> has no tweets yet.</p>
 <% end %>
 
-<p>Followers:</p>
-<% followers = Follower.where(user_id: @user.id).all %>
-<% if followers.count > 0 %>
-	<p><%= @user.username %> has <%= followers.count %> followers</p>
-	<% followers.each do | follower | %>
-		<p><a href="/users/<%= follower.follower_id %>"><%= User.find_by_id(follower.follower_id).username %></a></p>
-	<% end %>
-<% else %>
-	<p><%= @user.username %> has no follower.</p>
-<% end %>
-
-<p>Followings:</p>
-<% followings = Follower.where(follower_id: @user.id).all %>
-<% if followings.count > 0 %>
-	<p><%= @user.username %> is following <%= followings.count %> people</p>
-	<% followings.each do | following | %>
-		<p><a href="/users/<%= following.user_id %>"><%= User.find_by_id(following.user_id).username %></a></p>
-	<% end %>
-<% else %>
-	<p><%= @user.username %> is not following anyone.</p>
-<% end %>
+<br>
+<table width="100%">
+	<tr>
+		<td>Followers:</td>
+		<td>Following:</td>
+	</tr>
+	<tr>
+		<td valign="top">
+			<% followers = Follower.where(user_id: @user.id).all %>
+			<% if followers.count > 0 %>
+				<p><%= @user.username %> has <%= followers.count %> followers</p>
+				<% followers.each do | follower | %>
+					<p><a href="/users/<%= follower.follower_id %>"><%= User.find_by_id(follower.follower_id).username %></a></p>
+				<% end %>
+			<% else %>
+				<p><%= @user.username %> has no follower.</p>
+			<% end %>
+		</td>
+		<td valign="top">
+			<% followings = Follower.where(follower_id: @user.id).all %>
+			<% if followings.count > 0 %>
+				<p><%= @user.username %> is following <%= followings.count %> people</p>
+				<% followings.each do | following | %>
+					<p><a href="/users/<%= following.user_id %>"><%= User.find_by_id(following.user_id).username %></a></p>
+				<% end %>
+			<% else %>
+				<p><%= @user.username %> is not following anyone.</p>
+			<% end %>
+		</td>
+	</tr>
+</table>

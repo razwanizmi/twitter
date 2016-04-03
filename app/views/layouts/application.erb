@@ -1,18 +1,62 @@
 <html>
 	<head>
-		<title>Twitter Clone</title>
+		<meta charset="utf-8">
+		<title>Twitter Clone | Connecting clones worldwide</title>
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+		<link href='https://fonts.googleapis.com/css?family=Changa+One|Open+Sans:400,400italic,700,700italic,800' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/css/application.css">
+		<link rel="stylesheet" type="text/css" href="/css/responsive.css">
 	</head>
 	<body>
-		<h1>Welcome to Twitter Clone v1.0</h1>
-		<% if logged_in? %>
-			<form action="/" method="get">
-				<input type="submit" value="Home">
-			</form>
-			<form action="/sessions/<%=current_user.id%>" method="post">
-				<input type="submit" value="Logout">
-			</form>
-			<p>You are logged in as <%= current_user.username %></p>
-		<% end %>
-		<%= yield %>
+		<header>
+			<a href="/" id="logo">
+				<h1>Twitter Clone</h1>
+				<% if logged_in? %>
+					<h2>Welcome back, <%= current_user.username %></h2>
+				<% else %>
+					<h2>Welcome to Twitter, please login/sign up to be heard</h2>
+				<% end %>
+			</a>
+			<nav>
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li>
+						<% if logged_in? %>
+							<a href="/users/<%= current_user.id %>">Profile</a>
+						<% else %>
+							<a href="/sessions/new">Profile</a>
+						<% end %>
+					</li>
+					<li><a href="/users/index">Users</a></li>
+					<li><a href="/tweets/index">Trending</a></li>
+					<li>
+						<% if logged_in? %>
+							<a href="/tweets/new">Tweet</a>
+						<% else %>
+							<a href="/sessions/new">Tweet</a>
+						<% end %>
+					</li>
+					<li>
+						<% if logged_in? %>
+							<form action="/sessions/<%=current_user.id%>" method="post">
+								<button type="submit">Logout</button>
+							</form>
+						<% else %>
+							<form action="/sessions/new" method="get">
+								<button type="submit">Login/Sign up</button>
+							</form>
+						<% end %>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<div id="wrapper">
+			<section>
+				<%= yield %>
+			</section>
+			<footer>
+	 			<p>2016 Razwan Rashidi.</p>
+			</footer>
+		</div>
 	</body>
 </html>

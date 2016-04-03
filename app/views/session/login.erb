@@ -1,8 +1,21 @@
-<h2>Login below</h2>
-<form method=post action=/sessions>
-	<input type=text placeholder="Username" name="user[username]"><br>
-	<input type=password placeholder="Password" name="user[password]"></br>
-	<input type=submit value="Login">
-</form>
+<h3>Please login or sign up below to continue</h3>
 
+<div id="login">
+	<h3>Login</h3>
+	<form method=post action=/sessions>
+	  	<input type=text placeholder="Username" name="user[username]" value="@"><br>
+	  	<input type=password placeholder="Password" name="user[password]"><br>
+	  	<button type="submit">Login</button>
+	</form>
+</div>
+
+<div id="signup">
+	<h3>Sign up for an account</h3>
+	<form method="post" action="/users">
+		<input type="text" placeholder="Username" name="user[username]" value="@"><br>
+		<input type="text" placeholder="Email" name="user[email]"><br>
+		<input type="password" placeholder="Password" name="user[password]"></br>
+		<button type="submit">Sign up</button>
+	</form>
+</div>
 <p> <%= @message %> </p>

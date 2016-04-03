@@ -1,28 +1,27 @@
-<h2>Here is what everyone had to say</h2>
-
-<% if @tweets != nil %>
-	<table>
+<h3>Here's what happening everywhere:</h3>
+<% if @tweets.count != 0 %>
+	<table id="tweet">
 		<% @tweets.each do |tweet| %>
 		<tr>
-			<td><%= tweet.description %></td>
 			<td>
-				<% if current_user != nil %>
-					<% if tweet.user_id == current_user.id %>
+				<p id="description"><%= tweet.description %></p>
+				<div id="tags">
+					<p>Tweeted by: <a href="/users/<%= tweet.user.id %>"><%= tweet.user.username %></a></p> 
+					<p>on <%= tweet.updated_at.to_formatted_s(:long) %></p>
+				</div>
+				<div id="edit">
+					<% if logged_in? && tweet.user_id == current_user.id %>						
 						<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
 					<% end %>
+				</div>
+				<div id="delete">
+					<% if logged_in?  && tweet.user_id == current_user.id %>
+					<form action="/tweets/<%= tweet.id %>" method="post">
+						<input type="hidden" name="_method" value="delete">
+						<button type="submit">Delete</button>
+					</form>
 				<% end %>
-			</td>
-			<td>
-				<p>Tweeted by: <%= tweet.user.username %> on <%= tweet.updated_at %></p>
-			</td>
-			<td>
-				<% if current_user != nil %>
-					<% if tweet.user_id == current_user.id %>
-						<form action="/tweets/<%= tweet.id %>" method="post">
-							<input type="hidden" name="_method" value="delete">
-							<input type="submit" value="Delete">
-					<% end %>
-				<% end %>
+				</div>
 			</td>
 		</tr>
 		<% end %>

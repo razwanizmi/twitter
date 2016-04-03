@@ -1,5 +1,7 @@
-<h2>Here is everyone on Twitter Clone</h2>
+<h3>Here is everyone on Twitter Clone</h3>
 
+<ul style="list-style: none; margin-left: -40px">
 <% @users.each do |user| %>
-	<p><a href="/users/<%= user.id %>"><%= user.username %></a></p>
+	<li><a href="/users/<%= user.id %>"><%= user.username %></a></li>
 <% end %>
+</ul>

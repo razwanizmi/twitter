@@ -13,7 +13,7 @@ post '/tweets' do
 end
 
 get '/tweets/index' do
-  @tweets = Tweet.all
+  @tweets = Tweet.all.reverse
   erb :"tweet/all_tweets"
 end
 
@@ -25,7 +25,12 @@ end
 put '/tweets/:id' do
   tweet = Tweet.find(params[:id])
   tweet.update(params[:tweet].merge(user_id: current_user.id))
-  redirect "/users/#{current_user.id}"
+  if tweet.save
+    redirect "/users/#{current_user.id}"
+  else
+    @error = tweet.errors.full_messages
+    erb :"static/tweet_error"
+  end     
 end
 
 delete '/tweets/:id' do

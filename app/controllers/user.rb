@@ -1,10 +1,7 @@
-get '/users/new' do   
-  erb :"user/signup"
-end
-
 post '/users' do
   user = User.new(params[:user])
   if user.save
+    session[:user_id] = user.id
     redirect '/'
   else
     @error = user.errors.full_messages

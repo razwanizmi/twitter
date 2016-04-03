@@ -1,20 +1,31 @@
-<% if logged_in? %>
-	
-	<a href="/users/<%= current_user.id %>">View your profile</a><br>
-
-	<a href="/tweets/new">Create a new Tweet</a>
-
+<h3>Here's what happening around you:</h3>
+<% if @tweets.count != 0 %>
+	<table id="tweet">
+		<% @tweets.each do |tweet| %>
+		<tr>
+			<td>
+				<p id="description"><%= tweet.description %></p>
+				<div id="tags">
+					<p>Tweeted by: <a href="/users/<%= tweet.user.id %>"><%= tweet.user.username %></a></p> 
+					<p>on <%= tweet.updated_at.to_formatted_s(:long) %></p>
+				</div>
+				<div id="edit">
+					<% if logged_in? && tweet.user_id == current_user.id %>						
+						<a href="/tweets/<%= tweet.id %>/edit">Edit tweet</a>
+					<% end %>
+				</div>
+				<div id="delete">
+					<% if logged_in?  && tweet.user_id == current_user.id %>
+					<form action="/tweets/<%= tweet.id %>" method="post">
+						<input type="hidden" name="_method" value="delete">
+						<button type="submit">Delete</button>
+					</form>
+				<% end %>
+				</div>
+			</td>
+		</tr>
+		<% end %>
+	</table>
 <% else %>
-	<p>Please sign up or login below</p>
-	<br>
-	<form action="/users/new" method="get">
-		<input type="submit" value="Sign up">
-	</form>
-	<br>
-	<form action="/sessions/new" method="get">
-		<input type="submit" value="Login">
-	</form>
+	<p>There are no tweets yet.</p>
 <% end %>
-
-<br><a href='/users/index'>See all our users</a><br>
-<a href='/tweets/index'>See all tweets</a>
