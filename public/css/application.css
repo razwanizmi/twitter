@@ -24,7 +24,7 @@ HEADING
 
 header {
 	float: left;
-	margin: 0 0 30px 0;
+	margin: -20px 0 30px 0;
 	padding: 5px 0 0 0;
 	width: 100%;
 }
@@ -195,6 +195,17 @@ FORM
 }
 
 #newtweet button {
+	font-size: 0.75em;
+	margin-top: 10px;
+}
+
+#editprofile input {
+	font-size: 0.75em;
+	width: 250px;
+	margin-top: 5px;
+}
+
+#editprofile button {
 	font-size: 0.75em;
 	margin-top: 10px;
 }
